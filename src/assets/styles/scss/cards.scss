@@ -1,0 +1,326 @@
+@use 'sass:color';
+@use './mixins';
+@import './variables';
+@import './functions';
+@import './responsive';
+
+%card-tile {
+  background: lightColor(step-segment);
+  border-radius: $card-tile-radius;
+  padding: pxToRem(20);
+  margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.base-card,
+.v-dialog > .v-overlay__content > .v-card.base-card {
+  @include mixins.card-settings;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+
+  &.rap-card {
+    background: none;
+    border: none;
+
+    &.border-bottom-and-radius .card-content {
+      border-bottom: 2px solid
+        color.adjust(lightColor(disabled-light), $alpha: -0.8);
+      border-bottom-left-radius: $card-radius;
+      border-bottom-right-radius: $card-radius;
+    }
+
+    .card-header-wrap,
+    .job-view-footer-wrap {
+      background: lightColor(white);
+      position: sticky;
+      z-index: 1;
+      isolation: isolate;
+
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        left: 0;
+        width: 100%;
+      }
+
+      &:before {
+        bottom: calc(100% - 10px);
+        background: lightColor(background);
+        height: pxToRem(34);
+
+        @include tablet {
+          height: pxToRem(26);
+        }
+      }
+
+      &:after {
+        left: 0;
+        top: 0;
+        @include mixins.create-fields-border($opacity: 10);
+        background: lightColor(white);
+        height: 100%;
+      }
+    }
+
+    .card-header-wrap {
+      border-top-left-radius: $card-radius;
+      border-top-right-radius: $card-radius;
+      top: 1.5rem;
+
+      @include tablet {
+        top: 1rem;
+      }
+
+      &:before {
+        bottom: calc(100% - 10px);
+      }
+
+      &:after {
+        border-bottom: none;
+        border-top-left-radius: $card-radius;
+        border-top-right-radius: $card-radius;
+      }
+    }
+
+    .job-view-footer-wrap {
+      border-bottom-left-radius: $card-radius;
+      border-bottom-right-radius: $card-radius;
+      bottom: 1.5rem;
+
+      @include tablet {
+        bottom: 1rem;
+      }
+
+      &:before {
+        top: calc(100% - 10px);
+      }
+
+      &:after {
+        border-top: none;
+        border-bottom-left-radius: $card-radius;
+        border-bottom-right-radius: $card-radius;
+      }
+    }
+
+    .card-content {
+      padding-left: pxToRem(80);
+      background: lightColor(white);
+      @include mixins.create-fields-border($opacity: 10);
+      border-top: none;
+      border-bottom: none;
+      flex: 1;
+
+      @include notDesktop {
+        padding-left: pxToRem(32);
+      }
+
+      @include tablet {
+        padding-left: 1rem;
+      }
+    }
+  }
+
+  .card-header-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    align-items: center;
+    padding: pxToRem(20) pxToRem(32) pxToRem(20) pxToRem(24);
+
+    &.bordered-header {
+      border-bottom: 2px solid
+        color.adjust(lightColor(disabled-light), $alpha: -0.88);
+    }
+  }
+
+  .card-content {
+    padding: pxToRem(32);
+
+    @include tablet {
+      padding: 1rem;
+    }
+  }
+
+  [direction='row'] {
+    flex-direction: row;
+  }
+
+  &[direction='column'] {
+    flex-direction: column;
+  }
+
+  .back-button-card {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .card-tile {
+    @extend %card-tile;
+    &[direction='column'] {
+      flex-direction: column;
+    }
+  }
+
+  .card-badge,
+  .counter-badge {
+    background-color: lightColor(white);
+
+    &[invert] {
+      background-color: lightColor(step-segment);
+    }
+
+    border-radius: $card-badge-radius;
+    width: pxToRem(48);
+    height: pxToRem(48);
+    font-size: pxToRem(26);
+
+    &.card-badge-lg {
+      width: pxToRem(56);
+      height: pxToRem(56);
+      font-size: pxToRem(24);
+    }
+
+    aspect-ratio: 1/1;
+    @include mixins.centralize-flex;
+    color: lightColor(primary);
+    font-weight: 600;
+  }
+
+  .card-tile-content {
+    @include mixins.flex-column;
+    margin-left: 0.625rem;
+    flex-grow: 1;
+    flex-wrap: wrap;
+
+    &[direction='row'] {
+      flex-direction: row;
+    }
+  }
+
+  .card-title {
+    padding: 0;
+    color: lightColor(primary-dark);
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: $font-family-urbanist;
+  }
+
+  .card-tile-header {
+    @include mixins.space-between;
+    align-items: flex-start;
+  }
+
+  .card-tile-title {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0;
+  }
+
+  .card-text-unemph {
+    color: lightColor(disabled);
+    font-size: 0.75rem;
+
+    .dot-status {
+      position: relative;
+      margin-inline-start: 0.5rem;
+      padding-left: 0.5rem;
+
+      &:before {
+        content: '';
+        position: absolute;
+        height: 4px;
+        width: 4px;
+        background: lightColor(disabled);
+        border-radius: 50%;
+        @include mixins.centralize-absolute-y;
+        left: -2px;
+      }
+    }
+  }
+
+  .card-tile-vertical-details {
+    display: flex;
+    flex-direction: column;
+
+    .vertical-detail {
+      display: flex;
+      align-items: center;
+
+      &:not(:last-of-type) {
+        margin-bottom: 0.75rem;
+      }
+
+      i[class*='icon-'] {
+        color: lightColor(primary);
+        font-size: 1.125rem;
+        margin-right: 0.5rem;
+      }
+
+      span:not([class*='path']) {
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    &[position='bottom'] {
+      margin-top: 0.75rem;
+    }
+
+    .icon-eye.font-size-18 {
+      margin-inline-end: 0.385rem;
+    }
+  }
+
+  .popup-content {
+    &.max-margin {
+      margin-top: 28px;
+    }
+
+    &.min-margin {
+      margin-top: 15px;
+    }
+
+    .sub-title {
+      font-size: 0.75rem;
+      color: lightColor(primary-dark);
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .status-tag {
+    padding: 0.25rem 0.5rem;
+    color: lightColor(white);
+    font-size: pxToRem(10);
+    font-weight: 600;
+    border-radius: $card-tag-radius;
+  }
+
+  .popup-action-btn {
+    margin-top: 49px;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: normal;
+  }
+}
+
+.card-tile {
+  .card-tile {
+    @extend %card-tile;
+
+    &[direction='column'] {
+      flex-direction: column;
+    }
+  }
+}

@@ -1,0 +1,41 @@
+
+name: Deploy Takafo frontend
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:        
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true  # Set to false if you want all jobs to run regardless of individual failures
+      matrix:
+        node-version: ['20.13.0'] # Test against multiple node versions
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+  
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }} # Use matrix node versiobn
+      - name: Create .env file
+        run: |
+          echo VITE_APP_BACKEND_URL=https://az-takafo-stag.hcms.ai/v1 > .env
+
+      - name: check environment file
+        run: |
+          cat .env
+      
+      - name: Install NPM dependencies
+        run: |
+          npx @nestjs/cli --version
+          npm i
+    
+      - name: Build assets
+        run: |
+         npm run build
+
+      

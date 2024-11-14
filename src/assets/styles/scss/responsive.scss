@@ -1,0 +1,63 @@
+// Screen sizes
+$desktop: 1280px;
+$desktopWider: 1367px;
+$notDesktop: 1279px;
+$commonDesktop: 1366px;
+$tablet: 840px;
+$ipad: 768px;
+$tabletZone: 1150px;
+$mobile: 650px;
+
+@mixin desktop {
+  @media (min-width: #{$desktop}) {
+    @content;
+  }
+}
+
+@mixin commonDesktop {
+  @media (max-width: #{$commonDesktop}) {
+    @content;
+  }
+}
+
+@mixin notDesktop {
+  @media (max-width: #{$notDesktop}) {
+    @content;
+  }
+}
+
+@mixin tabletOnly {
+  @media (min-width: #{$mobile}) and (max-width: #{$tablet}) {
+    @content;
+  }
+}
+
+@mixin tabletZone {
+  @media (max-width: #{$tabletZone}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: #{$tablet}) {
+    @content;
+  }
+}
+
+@mixin ipad {
+  @media (max-width: #{$ipad}) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: #{$mobile}) {
+    @content;
+  }
+}
+
+@mixin desktopWider {
+  @media (min-width: #{$desktopWider}) {
+    @content;
+  }
+}

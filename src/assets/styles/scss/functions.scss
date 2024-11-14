@@ -1,0 +1,6 @@
+@use 'sass:math';
+@import './variables.scss';
+
+@function pxToRem($value) {
+  @return #{math.div($value, $root-unit-size)}rem;
+}

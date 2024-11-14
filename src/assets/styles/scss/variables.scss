@@ -1,0 +1,59 @@
+@use 'sass:map';
+@use 'sass:color';
+
+// Colors
+$takafo-light-colors: (
+  primary: #064975,
+  welcome-bg: #f4f9fb,
+  primary-dark: #042d49,
+  secondary: #096aaa,
+  background: #fafaff,
+  light-background: #f5f5ff,
+  danger: #b42318,
+  danger-dark: #2c0b0e,
+  info: #00B2A9,
+  info-dark: #032830,
+  warning: #ffc72c,
+  warning-dark: #d89c10,
+  success: #00778B,
+  success-dark: #06a733,
+  black: #000a10,
+  white: #ffffff,
+  border-color: #a5aeae,
+  step-segment: #f4f9fb,
+  step-segment-dark: #bbd1d8,
+  light-bg: #f4f9fb,
+  disabled: #858d98,
+  disabled-light: #a4a8ab,
+  job-table-head: #f1fffe,
+);
+
+$root-unit-size: 16;
+
+//Fonts
+$font-family-poppins: 'Poppins', sans-serif;
+$font-family-urbanist: 'Urbanist', sans-serif;
+
+// Border radius
+$root-border-radius: 1rem;
+$card-radius: 1rem;
+$card-tile-radius: 0.75rem;
+$card-badge-radius: 0.75rem;
+$card-tag-radius: 0.375rem;
+$fields-border-radius: 0.75rem;
+
+// Widths
+$page-max-width: 2500px;
+$base-title-font-size: 1.5rem;
+
+$gutter: 0.5rem;
+
+@function lightColor($color-name) {
+  @return map-get($takafo-light-colors, $color-name);
+}
+
+$primary-gradient: linear-gradient(
+  185.05deg,
+  color.adjust(lightColor(primary), $red: 31, $green: 89, $blue: 127) -216.53%,
+  lightColor(primary) 81.55%
+);

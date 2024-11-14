@@ -1,0 +1,177 @@
+@import './variables';
+@import './mixins';
+@import './functions';
+
+$sizes: ();
+$weights: ();
+
+// Font sizes
+@for $i from 8 through 60 {
+  @if ($i % 2 == 0) {
+    $sizes: append($sizes, $i);
+  }
+}
+
+// Font Weights
+@for $i from 100 through 900 {
+  @if ($i % 100 == 0) {
+    $weights: append($weights, $i);
+  }
+}
+
+// Creating mixings for font properties i.e, font-size, font-weight
+@mixin font-properties($type, $value) {
+  .font-#{$type}-#{$value} {
+    @if $type == 'size' {
+      font-#{$type}: #{calc($value / 16)}rem;
+    } @else {
+      font-#{$type}: $value;
+    }
+  }
+}
+
+// Creating classes for font-sizes from 8 - 60
+@each $size in $sizes {
+  @include font-properties('size', $size);
+}
+
+// Creating classes for font-weights from 100 - 900
+@each $weight in $weights {
+  @include font-properties('weight', $weight);
+}
+
+.color-primary {
+  color: lightColor(primary);
+}
+
+.color-danger {
+  color: lightColor(danger);
+}
+
+.color-disabled {
+  color: lightColor(disabled);
+}
+
+.radius-16 {
+  border-radius: $card-radius;
+}
+
+.radius-12 {
+  border-radius: calc($card-radius * 0.75);
+}
+
+.radius-14 {
+  border-radius: calc($card-radius * 0.5); 
+}
+
+.flexify {
+  display: flex;
+
+  &-just-center {
+    justify-content: center;
+  }
+
+  &-align-center {
+    align-items: center;
+  }
+}
+
+.dir-column {
+  flex-direction: column;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+.max-width-100 {
+  max-width: 100%;
+}
+
+.height-100 {
+  height: 100%;
+}
+
+.white-bg {
+  background: lightColor(white);
+}
+
+.row-container {
+  padding-left: $gutter;
+  padding-right: $gutter;
+}
+
+.star-rating {
+  color: lightColor(warning);
+  background: lightColor(white);
+  padding: 0.25rem 0.325rem;
+  border-radius: 0.325rem;
+  @include centralize-flex;
+  gap: 0.25rem;
+}
+
+.custom-scrollbar {
+  max-height: 100%;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: lightColor(background);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: color.adjust(lightColor(border-color), $alpha: -0.8);
+    border-radius: 10px;
+    border: 3px solid lightColor(background);
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: lightColor(primary); /* Color of the scrollbar handle on hover */
+  }
+}
+
+.text-unemphed {
+  color: lightColor(disabled);
+  font-size: pxToRem(12);
+}
+
+.warning-bg {
+  background: lightColor(warning);
+}
+
+.success-bg {
+  background: lightColor(success);
+}
+
+.progress-bg {
+  background: lightColor(info);
+}
+
+.captalize {
+  text-transform: capitalize;
+}
+
+.relative {
+  position: relative;
+}
+
+@for $i from 0 through 9 {
+  @if ($i == 1 or $i == 0) {
+    .opacity-#{$i} {
+      opacity: $i;
+    }
+  }
+  @else {
+    .opacity-#{$i} {
+      opacity: #{'0.'}#{$i};
+    }
+  }
+}

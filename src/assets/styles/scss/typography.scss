@@ -1,0 +1,85 @@
+@import '@/assets/styles/scss/variables.scss';
+
+.base-title {
+  color: lightColor(primary-dark);
+  font-weight: 600;
+  font-size: $base-title-font-size;
+  line-height: normal;
+  letter-spacing: unset;
+
+  // @media (max-width: 480px) {
+  //   font-size: 3.5rem;
+  // }
+}
+
+.base-body-text-1 {
+  color: lightColor(primary-dark);
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 26px;
+  letter-spacing: 0.02em;
+}
+
+.base-body-text-2 {
+  color: lightColor(primary-dark);
+  font-weight: 400;
+  font-size: 0.7rem;
+  line-height: 26px;
+  letter-spacing: 0.02em;
+}
+
+.base-heading {
+  color: lightColor(primary-dark);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: unset;
+  letter-spacing: unset;
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
+}
+
+.base-disabled-text {
+  color: lightColor(disabled);
+  font-weight: 400;
+  font-size: 0.9rem;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+}
+
+.base-heading-1 {
+  @extend .base-heading;
+  font-size: 2rem;
+}
+
+.base-heading-2 {
+  @extend .base-heading;
+  font-size: 1.6rem;
+}
+
+.base-heading-3 {
+  @extend .base-heading;
+  font-size: 1.3rem;
+}
+
+.base-heading-5 {
+  @extend .base-heading-3;
+  color: lightColor(primary);
+}
+
+.base-body-text-3 {
+  @extend .base-body-text-2;
+  color: lightColor(primary);
+  font-size: 0.8rem;
+}
+
+.base-body-text-4 {
+  @extend .base-body-text-2;
+  font-size: 1.5rem;
+}
+
+.base-body-text-6 {
+  @extend .base-body-text-2;
+  color: lightColor(black);
+  font-size: 0.9rem;
+}

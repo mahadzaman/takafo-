@@ -1,0 +1,57 @@
+
+name: Deploy Takafo frontend
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  build:        
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true  # Set to false if you want all jobs to run regardless of individual failures
+      matrix:
+        node-version: ['20.13.0'] # Test against multiple node versions
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+  
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }} # Use matrix node versiobn
+      - name: Create .env file
+        run: |
+          echo VITE_APP_BACKEND_URL=https://az-takafo-stag.hcms.ai > .env
+        # echo VITE_AZURE_CLIENT_ID=${{ secrets.STG_AZURE_SERVICE_PRINCIPLE_CLIENT_ID }} >> .env
+        # echo VITE_AZURE_AUTHORITY=${{ secrets.STG_AZURE_AUTHORITY }} >> .env
+        # echo VITE_AZURE_REDIRECT_URI=https://satakafostagingportal.z1.web.core.windows.net/v1/auth/azure/callback >> .env
+
+      - name: check environment file
+        run: |
+          cat .env
+
+          
+      - name: Install NPM dependencies
+        run: |
+          npx @nestjs/cli --version
+          npm i
+    
+      - name: Build assets
+        run: |
+         npm run build:staging
+
+      - name: Upload to Azure Storage
+        env:
+          AZURE_CLIENT_ID: ${{ secrets.SP_TAKAFO_FRONTEND_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.SP_AKAFO_FRONTEND_CLIENT_SECRET }}
+          AZURE_TENANT_ID: ${{ secrets.SP_TAKAFO_FRONTEND_ENANT_ID }}
+          AZURE_STORAGE_ACCOUNT: satakafostagingportal
+        run: |
+          az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
+          az storage blob upload-batch -d '$web' -s dist --account-name $AZURE_STORAGE_ACCOUNT --overwrite
+
+
+      
+  

@@ -1,0 +1,132 @@
+@use 'sass:color';
+@import './variables';
+@import './functions';
+
+.v-btn {
+  text-transform: unset;
+}
+
+.base-button {
+  background: transparent;
+  width: unset;
+  min-width: unset;
+  border-radius: 0.75rem;
+  text-transform: unset;
+  line-height: unset;
+  font-weight: 500;
+  height: unset;
+  letter-spacing: unset;
+  text-decoration: none;
+  border: none;
+  text-align: center;
+  border-color: transparent;
+  box-shadow: unset;
+
+  &:hover,
+  &:focus {
+    box-shadow: unset;
+
+    [class*='icon-'] {
+      text-decoration: none;
+    }
+
+    .v-btn__overlay {
+      background: none;
+    }
+  }
+
+  &:not(.primary-button, .secondary-button):hover
+    .v-btn__content
+    span:not(.v-btn__content [class*='icon-']),
+  &.router-link:hover > :not([class*='icon-']),
+  &:not(.primary-button, .secondary-button):hover
+    .v-btn__content:not(:has(span, [class*='icon-'])) {
+    text-decoration: underline;
+  }
+}
+
+@mixin primary-button {
+  @extend .base-button;
+  color: lightColor(white);
+  background: $primary-gradient;
+  box-shadow: 0px 6px 32px rgba(44, 50, 169, 0.039);
+  border-color: transparent;
+  position: relative;
+  isolation: isolate;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    width: calc(100% + 3px);
+    height: calc(100% + 3px);
+    background: lightColor(primary);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.2s ease;
+  }
+
+  &:hover:after {
+    opacity: 1;
+  }
+
+  @content;
+}
+
+.primary-button {
+  @include primary-button;
+}
+
+.secondary-button {
+  @extend .base-button;
+  background: lightColor(white);
+  color: lightColor(primary);
+  border: 2px solid;
+  transition:
+    color ease 0.2s,
+    background ease 0.2s;
+
+  &:hover {
+    background: lightColor(primary);
+    color: lightColor(white);
+    border-color: transparent;
+  }
+}
+
+@mixin base-disable-button {
+  @extend .base-button;
+  background: lightColor(disabled);
+  color: lightColor(white);
+  pointer-events: none;
+  @content;
+}
+
+.base-disable-button {
+  @include base-disable-button;
+}
+
+.regular-button {
+  padding: pxToRem(10) pxToRem(16);
+}
+
+.small-button {
+  padding: pxToRem(10);
+
+  &.secondary-button {
+    border-width: 1px;
+  }
+}
+
+.x-small-button {
+  padding: 0.375rem 0.875rem;
+
+  &.rounded {
+    border-radius: 0.5rem;
+  }
+}
+
+.greyed-out {
+  border-color: color.adjust(lightColor(disabled), $alpha: -0.8);
+  color: lightColor(black);
+}

@@ -1,0 +1,124 @@
+@import './responsive.scss';
+
+$rem: 16;
+$spacings: ();
+
+// Loop from 2 to 100, incrementing by 2 (even numbers only)
+@for $i from 0 through 100 {
+  @if ($i % 2 == 0) {
+    $spacings: append($spacings, $i);
+  }
+}
+
+@mixin apply-spacing($type, $dir, $spacing, $breakpoint: '') {
+  $typeShort: if($type == margin, 'mar', 'pad');
+  $dir-map: (
+    top: t,
+    right: r,
+    bottom: b,
+    left: l,
+    x: x,
+    y: y,
+  );
+  $dirShort: map-get($dir-map, $dir);
+
+  // Main class definition with optional breakpoint suffix
+  .#{$typeShort}-#{$dirShort}#{$breakpoint}-#{$spacing} {
+    @if $dir == 'x' {
+      #{$type}-left: #{calc($spacing / $rem)}rem;
+      #{$type}-right: #{calc($spacing / $rem)}rem;
+    } @else if $dir == 'y' {
+      #{$type}-top: #{calc($spacing / $rem)}rem;
+      #{$type}-bottom: #{calc($spacing / $rem)}rem;
+    } @else {
+      #{$type}-#{$dir}: #{calc($spacing / $rem)}rem;
+    }
+  }
+}
+
+@mixin space($dir, $type) {
+  @each $spacing in $spacings {
+    // Default styles
+    @include apply-spacing($type, $dir, $spacing);
+  }
+
+  // Responsive breakpoints
+  @each $spacing in $spacings {
+    @include commonDesktop {
+      @include apply-spacing($type, $dir, $spacing, '-common-desktop');
+    }
+  }
+
+  @each $spacing in $spacings {
+    @include desktopWider {
+      @include apply-spacing($type, $dir, $spacing, '-desktop-only');
+    }
+  }
+
+  @each $spacing in $spacings {
+    @include notDesktop {
+      @include apply-spacing($type, $dir, $spacing, '-not-desktop');
+    }
+  }
+
+  @each $spacing in $spacings {
+    @include tablet {
+      @include apply-spacing($type, $dir, $spacing, '-tab');
+    }
+  }
+
+  @each $spacing in $spacings {
+    @include mobile {
+      @include apply-spacing($type, $dir, $spacing, '-mob');
+    }
+  }
+}
+
+@mixin gap {
+  @each $spacing in $spacings {
+    .gap-#{$spacing} {
+      gap: #{calc($spacing / $rem)}rem;
+    }
+  
+    .gap-y-#{$spacing} {
+      row-gap: #{calc($spacing / $rem)}rem;
+    }
+
+    .gap-x-#{$spacing} {
+      column-gap: #{calc($spacing / $rem)}rem;
+    }
+  }
+}
+
+// Generate all margin and padding classes
+@include space(x, margin);
+@include space(y, margin);
+@include space(top, margin);
+@include space(right, margin);
+@include space(bottom, margin);
+@include space(left, margin);
+
+@include space(top, padding);
+@include space(right, padding);
+@include space(bottom, padding);
+@include space(left, padding);
+@include space(x, padding);
+@include space(y, padding);
+
+@include gap;
+
+.mar-l-auto {
+  margin-left: auto;
+}
+
+.mar-t-auto {
+  margin-top: auto;
+}
+
+.pad-0 {
+  padding: 0;
+}
+
+.mar-0 {
+  margin: 0;
+}

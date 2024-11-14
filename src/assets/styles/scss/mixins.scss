@@ -1,0 +1,48 @@
+@use 'sass:color';
+@import './variables.scss';
+
+@mixin create-fields-border($opacity: 100, $important: null) {
+  border: 2px solid
+    color.adjust(lightColor(disabled-light), $alpha: calc($opacity * 0.01 - 1)) #{$important};
+}
+
+@mixin card-settings {
+  border-radius: $card-radius;
+  background: lightColor(white);
+  @include create-fields-border($opacity: 10);
+}
+
+@mixin centralize-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin centralize-absolute {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin centralize-absolute-y {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@mixin centralize-absolute-x {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin space-between {
+  display: flex;
+  justify-content: space-between;
+}

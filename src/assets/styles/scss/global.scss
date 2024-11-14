@@ -1,0 +1,412 @@
+@use 'sass:color';
+@import './variables';
+@import './fonts';
+@import './mixins';
+@import './utilities';
+@import './button';
+@import './functions';
+@import './responsive';
+
+body {
+  font-family: $font-family-poppins;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: lightColor(black);
+}
+
+button,
+a,
+input[type='button'] {
+  * {
+    color: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: $font-family-poppins;
+}
+
+.page {
+  max-width: $page-max-width !important;
+
+  .custom-scrollbar {
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: lightColor(background);
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: color.adjust(lightColor(border-color), $alpha: -0.8);
+      border-radius: 10px;
+      border: 1px solid lightColor(background);
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: lightColor(
+        primary
+      ); /* Color of the scrollbar handle on hover */
+    }
+  }
+}
+
+// ---Vuetify form components
+
+// v-select
+.v-select.v-input,
+.v-combobox.v-input {
+  &.disabled-input-readonly {
+    .v-field {
+      opacity: 1;
+
+      .v-field__append-inner {
+        display: none;
+      }
+    }
+  }
+
+  .v-field {
+    border-radius: $fields-border-radius;
+    background: lightColor(white);
+    box-shadow: none;
+    @include create-fields-border(20);
+    height: pxToRem(48);
+
+    &.v-field--focused {
+      .v-label.v-field-label {
+        visibility: visible;
+        opacity: 0.6;
+      }
+    }
+
+    &.v-field--dirty {
+      .v-label.v-field-label {
+        opacity: 0;
+      }
+    }
+
+    .v-field__input {
+      min-height: pxToRem(46);
+      height: pxToRem(46);
+      padding: pxToRem(12) pxToRem(20);
+      font-size: pxToRem(12);
+      font-weight: 400;
+      opacity: unset;
+
+      .v-select__selection {
+        line-height: normal;
+      }
+    }
+  }
+
+  .v-list {
+    top: 8px;
+  }
+
+  .v-field__field > .v-label.v-field-label {
+    visibility: visible;
+    transition: opacity 0s;
+  }
+
+  .v-field__outline {
+    & > * {
+      opacity: 0.2;
+      border: none;
+    }
+
+    & > .v-field__outline__notch {
+      display: none;
+    }
+  }
+
+  .v-field:hover .v-field__outline * {
+    opacity: 0.5;
+  }
+
+  &.multi-select,
+  &.v-combobox {
+    .v-field {
+      height: unset;
+
+      .v-field__input {
+        min-height: pxToRem(46);
+        height: unset;
+      }
+    }
+  }
+}
+
+.v-combobox.v-input {
+  .v-field {
+    min-height: pxToRem(96);
+  }
+}
+
+.v-comboboxWithoutTile.v-input {
+  .v-field {
+    min-height: pxToRem(46);
+  }
+}
+
+.base-input.v-input,
+.v-input:not(
+    .v-select.v-input,
+    .v-checkbox.v-input,
+    .base-textarea,
+    .v-combobox
+  ) {
+  .v-input__control {
+    height: unset;
+    border-radius: $card-tile-radius;
+    @include create-fields-border(20);
+    background: lightColor(white);
+
+    .v-field {
+      background: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .v-field__input {
+      height: unset;
+      max-height: unset;
+      min-height: pxToRem(46);
+      padding: pxToRem(14) 1rem;
+      color: lightColor(black);
+      font-size: pxToRem(12);
+      resize: none;
+    }
+
+    .v-field__outline {
+      border: none;
+      & > * {
+        border: none;
+      }
+    }
+  }
+}
+
+.v-overlay__content.v-select__content {
+  transform: translateY(0.8rem);
+  border-radius: $fields-border-radius;
+
+  .v-list-item {
+    color: lightColor(disabled);
+
+    &:hover {
+      color: lightColor(primary-dark);
+
+      .v-list-item__overlay {
+        background: none;
+      }
+    }
+
+    .v-list-item__overlay {
+      transition: none;
+    }
+  }
+}
+
+// v-dialog
+.v-dialog > .v-overlay__content .v-card {
+  min-height: 420px;
+}
+
+// Vuetify styling reset
+
+* .v-btn.v-btn--density-default:not(.v-date-picker-month__day-btn),
+.v-btn.v-btn--density-default:not(.v-date-picker-month__day-btn) {
+  height: unset;
+}
+
+.jr-details-wrap {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.field-label {
+  display: block;
+  font-size: pxToRem(12);
+  font-weight: 500;
+  margin-bottom: pxToRem(10);
+}
+
+.base-date-input {
+  &.disabled-input-readonly {
+    .v-field {
+      opacity: 1;
+    }
+  }
+
+  .icon-calendar {
+    right: 1rem;
+    @include centralize-absolute-y;
+    font-size: pxToRem(24);
+    color: lightColor(primary);
+  }
+}
+
+// text-area and text-input stylings
+.base-input,
+.base-textarea,
+.base-input.disabled-input-readonly,
+.base-textarea.disabled-input-readonly {
+  .v-input__control {
+    height: pxToRem(48);
+    border-radius: $card-tile-radius;
+    @include create-fields-border(20);
+    background: lightColor(white);
+
+    .v-field {
+      background: none;
+      box-shadow: none;
+    }
+
+    .v-field--disabled {
+      opacity: 1;
+    }
+
+    .v-field__input {
+      height: 3rem;
+      max-height: 3rem;
+      min-height: 3rem;
+      color: lightColor(black);
+      font-size: pxToRem(12);
+
+      &:disabled {
+        opacity: 1;
+      }
+    }
+
+    .v-field__outline {
+      & > * {
+        border: none;
+      }
+    }
+  }
+}
+
+.base-textarea,
+.base-textarea.disabled-input-readonly {
+  .v-input__control {
+    height: unset;
+
+    .v-field__input {
+      height: unset;
+      max-height: unset;
+      min-height: unset;
+      resize: none;
+    }
+  }
+}
+
+// Styling for checkboxes
+.base-checkbox,
+.base-checkbox.v-checkbox {
+  .v-input__control {
+    height: unset;
+    min-height: unset;
+    background: none;
+
+    .v-label {
+      color: lightColor(black);
+      font-size: pxToRem(12);
+      font-weight: 500;
+      opacity: 1;
+    }
+
+    .v-selection-control {
+      min-height: unset;
+    }
+
+    .v-selection-control__wrapper,
+    .v-selection-control__input {
+      height: unset;
+    }
+  }
+
+  .v-input__details {
+    display: none;
+  }
+}
+
+// Styling for file input
+.base-file-input {
+  .v-input__control {
+    height: pxToRem(48);
+    .v-field,
+    .v-field__field {
+      height: pxToRem(44);
+    }
+
+    .x-small-button {
+      font-size: pxToRem(12);
+      border-radius: 0.5rem;
+    }
+  }
+}
+
+.chip-sekeleton-loading {
+  position: relative;
+  overflow: hidden;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% + 2px); 
+    height: calc(100% + 2px);
+    background: lightColor(step-segment-dark);
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 75%;
+    background: linear-gradient(
+      90deg,
+      rgba(187, 209, 216, 0) 0%,
+      rgba(220, 236, 241, 0.85) 35%,
+      rgba(220, 236, 241, 0.85) 65%,
+      rgba(187, 209, 216, 0) 100%
+    );
+    animation: chip-sekeleton-anim 0.5s ease-in-out infinite;
+  }
+}
+
+@keyframes chip-sekeleton-anim {
+  from {
+    transform: translateX(-120%);
+  }
+  to {
+    transform: translateX(120%);
+  }
+}
+
+@include desktop {
+  .v-container {
+    max-width: 1360px;
+  }
+}
+
+// Imported spacing in the end to increase the priority for spacing
+// Please keep other css above this line
+@import './spacing';

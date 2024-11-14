@@ -1,0 +1,78 @@
+@use 'sass:color';
+@import './mixins';
+@import './functions';
+.base-form {
+  .form-field {
+    .form-field-label {
+      font-size: 14px;
+      line-height: 16px;
+      text-transform: capitalize;
+      color: lightColor(secondary);
+      margin-bottom: 0px;
+      display: block;
+    }
+
+    .form-field-input {
+      .v-field {
+        background-color: lightColor(white) !important;
+        @include create-fields-border(20, '!important');
+        box-shadow: 0 6px 32px rgba(44, 50, 169, 0.04) !important;
+        border-radius: 12px !important;
+        padding: 6px 12px !important;
+        min-height: 64px;
+        .v-text-field__slot {
+          padding: 0 8px !important;
+        }
+      }
+
+      .v-text-field__details {
+        .v-messages__message {
+          padding: 0 8px !important;
+        }
+      }
+
+      .v-otp-input__content {
+        max-width: 100% !important;
+      }
+    }
+
+    .form-field-job-input {
+      .v-field {
+        background-color: lightColor(white) !important;
+        @include create-fields-border(20, '!important');
+        box-shadow: 0 6px 32px rgba(44, 50, 169, 0.04) !important;
+        border-radius: 12px !important;
+        min-height: 30px;
+
+        .v-text-field__slot {
+          padding: 0 0px !important;
+        }
+      }
+
+      .v-text-field__details {
+        .v-messages__message {
+          padding: 0 0px !important;
+        }
+      }
+
+      .v-otp-input__content {
+        max-width: 100% !important;
+      }
+    }
+
+    &-errors {
+      margin: 0.4rem 0;
+      &-error {
+        color: lightColor(danger);
+      }
+    }
+  }
+}
+
+.otp-form {
+  @extend .base-form;
+
+  .v-field {
+    height: 100px !important;
+  }
+}
